@@ -1,6 +1,8 @@
 package com.example.weatherRapidApi;
 
 
+import com.example.weatherRapidApi.model.ForrecastLocation;
+import com.example.weatherRapidApi.model.Location;
 import com.example.weatherRapidApi.model.WeatherData;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
@@ -26,14 +28,14 @@ public class WeatherRapidApiApplication {
 				.method("GET", HttpRequest.BodyPublishers.noBody())
 				.build();
 		HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-
 		System.out.println(response.body());
 
-//		JSONObject obj = new JSONObject(response);
-//		JSONArray locationArr = (JSONArray) response.;
-//		String info = String.valueOf(obj.getJSONObject("location").getDouble("name"));
+		ForrecastLocation forrecastLocation = new ObjectMapper().readValue(response.body(), ForrecastLocation.class);
 
-		WeatherData weatherData = new ObjectMapper().readValue(response.body(), WeatherData.class);
+		System.out.println(forrecastLocation.getLocation().getName());
+		System.out.println(forrecastLocation.getLocation().getTzId());
+
+//		WeatherData weatherData = new ObjectMapper().readValue(response.body(), WeatherData.class);
 	}
 
 }
