@@ -1,12 +1,8 @@
 package com.example.weatherRapidApi;
 
 
-import com.example.weatherRapidApi.model.ForrecastLocation;
-import com.example.weatherRapidApi.model.Location;
-import com.example.weatherRapidApi.model.WeatherData;
+import com.example.weatherRapidApi.dto.WeatherData;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -19,23 +15,9 @@ import java.net.http.HttpResponse;
 @SpringBootApplication
 public class WeatherRapidApiApplication {
 
-	public static void main(String[] args) throws IOException, InterruptedException {
-//		SpringApplication.run(WeatherRapidApiApplication.class, args);
-		HttpRequest request = HttpRequest.newBuilder()
-				.uri(URI.create("https://weatherapi-com.p.rapidapi.com/history.json?q=Minsk&dt=2023-11-29&lang=en"))
-				.header("X-RapidAPI-Key", "2b58b0e4a4mshedb529cf1749e26p151970jsn2279bd84e735")
-				.header("X-RapidAPI-Host", "weatherapi-com.p.rapidapi.com")
-				.method("GET", HttpRequest.BodyPublishers.noBody())
-				.build();
-		HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-		System.out.println(response.body());
+	public static void main(String[] args) {
+		SpringApplication.run(WeatherRapidApiApplication.class, args);
 
-		ForrecastLocation forrecastLocation = new ObjectMapper().readValue(response.body(), ForrecastLocation.class);
 
-		System.out.println(forrecastLocation.getLocation().getName());
-		System.out.println(forrecastLocation.getLocation().getTzId());
-
-//		WeatherData weatherData = new ObjectMapper().readValue(response.body(), WeatherData.class);
 	}
-
 }
